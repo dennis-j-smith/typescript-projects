@@ -1,34 +1,16 @@
-type User = { name: string; age: number };
-const u1: User = { name: 'Max', age: 30 };
+let userInput: unknown;
+let userName: string;
 
-type Combinable = number | string;
-type ConversionDescriptor = 'as-number' | 'as-text'
-// Union Types, Literal Types
-function combine(
-    input1: Combinable, 
-    input2: Combinable, 
-    resultConversion: ConversionDescriptor) {
+userInput = 5;
+userInput = 'Max';
+if (typeof userInput === 'string') {
 
-    let result;
-    if (typeof input1 === 'number' && typeof input2 === 'number') {
-        result = input1 + input2;
-    } else {
-        result = input1.toString() + input2.toString();
-    }
-    if (resultConversion === 'as-number') {
-        return +result;
-    } else {
-        return result.toString();
-    }
-    return result;
-
+    userName = userInput;
 }
 
-const combinedAges  = combine(20, 26, 'as-number')
-console.log(combinedAges);
+function generateError(message: string, code: number): never {
+    throw {message: message, errorCode: code};    
+}
 
-const combinedStringAges  = combine('20', '26', 'as-number')
-console.log(combinedStringAges);
-
-const combinedNames = combine("Dennis", "Smith", 'as-text')
-console.log(combinedNames);
+const result = generateError('An error occured!', 500)
+console.log(result)
