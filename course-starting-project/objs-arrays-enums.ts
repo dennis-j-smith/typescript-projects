@@ -16,7 +16,7 @@
 //     role: [2, 'author'] // tuple - fixed length array
 // }
 
-enum Role {ADMIN, READ_ONLY, AUTHOR};
+//enum Role {ADMIN, READ_ONLY, AUTHOR};
 
 const person = {
     name: 'Dennis',
