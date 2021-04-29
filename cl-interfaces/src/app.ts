@@ -1,88 +1,71 @@
-class Department {
-    //private id: string;
-    //name: string;
-    protected employees: string[] = [];
-    constructor(private readonly id: string, public name: string) {
-        //this.name = n;
-    }
+type Admin = {
+    name: string;
+    privileges: string[];
+};
 
-    describe(this:  Department) {
-        console.log(`Department ${this.id} ${this.name}`)
-    }
+type Employee = {
+    name: string;
+    startDate: Date;
+};
 
-    addEmployee(employee: string) {
-        this.employees.push(employee);
-    }
+type ElevatedEmployee = Admin & Employee;
 
-    printEmployeeInformation() {
-        console.log(this.employees.length);
-        console.log(this.employees);
+const el: ElevatedEmployee = {
+    name: 'Max',
+    privileges: ['create-server'],
+    startDate: new Date()
+}
+
+type Combinable = string | number;
+type Numeric = number | boolean;
+
+type Universal = Combinable & Numeric;
+
+
+// Type guards
+
+function addit(a: Combinable, b: Combinable) {
+    if (typeof a === 'string' || typeof b === 'string') {
+        return a.toString() + b.toString();
+    }
+    return a + b;
+}
+
+type UnknownEmployee = Employee | Admin;
+
+function printEmployeeInformation(emp: UnknownEmployee) {
+    console.log("Name: " + emp.name);
+    if ('privileges' in emp) {
+        console.log('Privileges: ' + emp.privileges)
+    }
+    if ('startDate' in emp) {
+        console.log('Start Date: ' + emp.startDate)
+    }
+    
+}
+
+class Car {
+    drive() {
+        console.log('Driving')
     }
 }
 
-class ITDepartment extends Department {
-
-    admins: string[];
-
-    constructor(id: string, admins: string[]) {
-        super(id, "IT")
-        this.admins=admins;
+class Truck {
+    drive() {
+        console.log('Driving a truck')
     }
-
-}
-
-class AccountingDepartment extends Department {
-
-    private lastReport: string;
-
-    get mostRecentReport() {
-        if (this.lastReport) {
-            return this.lastReport;
-        }
-        throw new Error('No report found.');
-    }
-
-    set mostRecentReport(report: string) {
-        this.addReport(report);
-    }
-    constructor(id: string, private reports: string[]) {
-        super(id, "Accounting")
-        this.lastReport = reports[0];
-    }
-
-    addReport(text: string) {
-        this.reports.push(text);
-        this.lastReport = text;
-    }
-
-    printReports() {
-        console.log(this.reports);
-    }
-
-    addEmployee(name: string) {
-        if (name == 'Max') {
-            ReadableStreamDefaultController;
-        }        
-        this.employees.push(name);
+    loadCargo(amount: number) {
+        console.log('Loading cargo...' + amount)
     }
 }
 
+type Vehicle = Car | Truck;
 
-const it = new ITDepartment('d1', ['Max']);
+const v1 = new Car();
+const v2 = new Truck();
 
-
-
-const acct = new AccountingDepartment('d2', ['Budget', 'Finance']);
-acct.addEmployee('Max');
-acct.addEmployee('Manu');
-
-acct.describe()
-acct.printEmployeeInformation();
-
-acct.printReports();
-
-console.log(acct.mostRecentReport);
-// const accountingCopy =  { name: 'FOO', describe: accounting.describe };
-
-// accountingCopy.describe();
-
+function useVehicle(vehicle: Vehicle) {
+    vehicle.drive();
+    if (vehicle instanceof Truck)
+        vehicle.loadCargo(12);
+}
