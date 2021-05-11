@@ -1,3 +1,5 @@
+console.log('*****');
+
 type Admin = {
     name: string;
     privileges: string[];
@@ -18,18 +20,24 @@ const el: ElevatedEmployee = {
 
 type Combinable = string | number;
 type Numeric = number | boolean;
-
 type Universal = Combinable & Numeric;
 
 
-// Type guards
-
+// Type guards, overloads
+//function addit(a: number): number
+function addit(a: number, b: number): number
+function addit(a: string, b: string): string
 function addit(a: Combinable, b: Combinable) {
     if (typeof a === 'string' || typeof b === 'string') {
         return a.toString() + b.toString();
     }
     return a + b;
 }
+
+
+const result = addit('Dennis', ' Smith');
+result.split(' ');
+
 
 type UnknownEmployee = Employee | Admin;
 
@@ -69,3 +77,56 @@ function useVehicle(vehicle: Vehicle) {
     if (vehicle instanceof Truck)
         vehicle.loadCargo(12);
 }
+
+
+// Discriminated Union
+//
+interface Bird {
+    type: 'bird';
+    flyingSpeed: number;
+}
+
+interface Horse {
+    type: 'horse';
+    runningSpeed: number;
+}
+
+type Animal = Bird | Horse;
+
+function moveAnimal(animal: Animal) {
+    let speed;
+    switch (animal.type) {
+        case 'bird':
+            speed = animal.flyingSpeed;
+            break;
+        case 'horse':
+            speed = animal.runningSpeed;
+            break;
+    }
+    console.log('Moving with speed: ' + speed);
+}
+
+moveAnimal({type: 'bird', flyingSpeed: 10})
+
+// Typecasting
+
+const paragraph = document.querySelector('p');
+const paragraph2 = document.getElementById('message-output');
+
+//const userInputElement = <HTMLInputElement>document.getElementById('user-input')!;
+const userInputElement = document.getElementById('user-input')! as HTMLInputElement;
+// ! - means it will never yield null
+
+userInputElement.value = 'Hi There';
+
+// Index Properties
+
+interface ErrorContainer {   
+    [prop: string]: string;
+}
+
+const errorBag:  ErrorContainer = {
+    email: "Not a valid Email",
+    username: "Must start with a character"
+}
+
