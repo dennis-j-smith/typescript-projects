@@ -39,6 +39,19 @@ const result = addit('Dennis', ' Smith');
 result.split(' ');
 
 
+// Optional Chaining
+const fetchedUserData = {
+    id: 'u1',
+    name: 'Max',
+    //job: {title: 'CEO', description: 'My own company'}
+};
+
+console.log(fetchedUserData?.job?.title);
+
+// Nullish Coalescing
+const userInput = '';
+const storedData = userInput ?? 'DEFAULT';
+
 type UnknownEmployee = Employee | Admin;
 
 function printEmployeeInformation(emp: UnknownEmployee) {
