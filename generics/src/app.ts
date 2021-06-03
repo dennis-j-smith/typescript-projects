@@ -66,3 +66,23 @@ const numberStorage = new DataStorage<number>();
 // const objectStorage = new DataStorage<object>();
 // objectStorage.addItem({name: 'Max'})
 // objectStorage.addItem({name: 'Manu'})
+
+// Utility Types
+interface CourseGoal {
+    title: string;
+    description: string;
+    completeUtil: Date;
+}
+
+function createCourseGoal(title: string, description: string, date: Date) : CourseGoal {
+    let courseGoal: Partial<CourseGoal> = {};
+
+    courseGoal.title= title;
+
+    courseGoal.description = description;
+    courseGoal.completeUtil = date;
+    return courseGoal as CourseGoal;
+}
+
+const names: Readonly<string[]> = ['Max', 'Anna'];
+//names.push('Manu');
